@@ -28,15 +28,6 @@ class PermohonanController extends Controller
       return view('permohonan/template_permohonan', compact('page_title'));
     }
 
-    public function statuspermohonan()
-    {
-      $page_title = 'Status Permohonan Exam';
-      $variable1 = '<h1>Variable 1</h1>';
-      $variable2 = 2;
-
-      return view('permohonan/template_status', compact('page_title', 'variable1', 'variable2') );
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -45,7 +36,32 @@ class PermohonanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      // Validate data
+      $this->validate($request, [
+        'nama_pemohon' => 'required|string|min:3',
+        'email_pemohon' => 'required|email'
+      ] );
+
+
+        return $request->all();
+        // return $request->input('nama_pemohon');
+    }
+
+    public function statuspermohonan()
+    {
+      $page_title = 'Status Permohonan Exam';
+
+      return view('permohonan/template_status', compact('page_title') );
+    }
+
+    public function checkpermohonan(Request $request)
+    {
+      // Validate data
+      $this->validate($request, [
+        'email_pemohon' => 'required|email'
+      ] );
+
+        return $request->all();
     }
 
     /**

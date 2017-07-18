@@ -9,14 +9,17 @@
                 <div class="panel-heading">{{ $page_title }}</div>
                 <div class="panel-body">
 
-                  <form class="form-horizontal" method="POST" action="">
+                  @include('layouts/alerts')
+
+                  <form class="form-horizontal" method="POST" action="{{ route('storepermohonan') }}">
                       {{ csrf_field() }}
 
                       <div class="form-group">
                           <label for="nama_pemohon" class="col-md-4 control-label">Nama Pemohon</label>
 
                           <div class="col-md-6">
-                              <input type="text" class="form-control" name="nama_pemohon" value="{{ old('nama_pemohon') }}" required autofocus>
+                              <input type="text" class="form-control" name="nama_pemohon" value="{{ old('nama_pemohon') }}"  autofocus>
+                              {!! $errors->first('nama_pemohon', '<span class="text-danger">:message</span>') !!}
                           </div>
                       </div>
 
