@@ -4,22 +4,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('permohonan', function () {
+Route::get('permohonan', 'PermohonanController@paparborangpermohonan')->name('permohonan');
 
-  $page_title = 'Status Permohonan Exam';
-
-  return view('permohonan/template_permohonan', compact('page_title'));
-
-})->name('permohonan');
-
-Route::get('status', function () {
-
-  $page_title = 'Status Permohonan Exam';
-  $variable1 = '<h1>Variable 1</h1>';
-  $variable2 = 2;
-
-  return view('permohonan/template_status', compact('page_title', 'variable1', 'variable2') );
-});
+Route::get('status', 'PermohonanController@statuspermohonan');
 
 Auth::routes();
 
