@@ -33,6 +33,7 @@
                         <td>{{ $user->email }}</td>
                         <td>
                           <a href="{{ route('lihatuser', $user->id) }}" class="btn btn-xs btn-primary">SHOW</a>
+                          <a href="{{ route('edituser', $user->id) }}" class="btn btn-xs btn-info">EDIT</a>
                         </td>
                       </tr>
 

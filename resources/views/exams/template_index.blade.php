@@ -5,10 +5,12 @@
     <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Senarai Users</div>
+                <div class="panel-heading">Senarai Exams</div>
 
                 <div class="panel-body">
-                    Berikut adalah senarai users sistem ini.
+                  <p>
+                    <a href="{{ route('paparborangtambahexam') }}" class="btn btn-primary">Tambah Exam</a>
+                  </p>
 
                     <table class="table table-bordered">
                       <thead>
@@ -34,6 +36,14 @@
                         <td>{{ $exam->status }}</td>
                         <td>
                           <a href="{{ route('lihatexam', $exam->id) }}" class="btn btn-xs btn-primary">SHOW</a>
+                          <a href="{{ route('editexam', $exam->id) }}" class="btn btn-xs btn-info">EDIT</a>
+
+                          <form method="POST" action="{{ route('deleteexam', $exam->id) }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="_method" value="delete">
+                            <button type="submit" class="btn btn-xs btn-danger">DELETE</button>
+                          </form>
+                          
                         </td>
                       </tr>
 

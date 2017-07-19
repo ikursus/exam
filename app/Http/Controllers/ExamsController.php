@@ -27,7 +27,7 @@ class ExamsController extends Controller
      */
     public function create()
     {
-        //
+        return view('exams/template_add_exam');
     }
 
     /**
@@ -38,7 +38,22 @@ class ExamsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request, [
+        'nama' => 'required|string|min:3',
+        'tarikh_mula' => 'required',
+        'tarikh_tamat' => 'required',
+        'kuota' => 'required|numeric',
+        'status' => 'required'
+      ]);
+
+      // Dapatkan semua data yang dikirimkan.
+      $data = $request->only('nama', 'tarikh_mula', 'tarikh_tamat', 'kuota', 'status');
+
+      // Simpan data ke dalam database
+      DB::table('exams')->insert( $data );
+
+      // Bagi response
+      return redirect()->route('exams');
     }
 
     /**
@@ -62,7 +77,9 @@ class ExamsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $exam = DB::table('exams')->where('id', $id)->first();
+
+      return view('exams/template_edit_exam', compact('exam') );
     }
 
     /**
@@ -74,7 +91,22 @@ class ExamsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+        'nama' => 'required|string|min:3',
+        'tarikh_mula' => 'required',
+        'tarikh_tamat' => 'required',
+        'kuota' => 'required|numeric',
+        'status' => 'required'
+      ]);
+
+      // Dapatkan semua data yang dikirimkan.
+      $data = $request->only('nama', 'tarikh_mula', 'tarikh_tamat', 'kuota', 'status');
+
+      // Simpan data ke dalam database
+      DB::table('exams')->where('id', $id)->update( $data );
+
+      // Bagi response
+      return redirect()->route('exams');
     }
 
     /**
@@ -85,6 +117,8 @@ class ExamsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $exam = DB::table('exams')->where('id', $id)->delete();
+
+        return redirect()->route('exams');
     }
 }

@@ -16,7 +16,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Routes senarai users
+// Route senarai users
 Route::get('users', 'UsersController@index')->name('users');
 
 // Route tambah maklumat user
@@ -25,11 +25,22 @@ Route::post('users/add', 'UsersController@store')->name('simpanrekodtambahuser')
 
 // Route maklumat user berdasarkan ID
 Route::get('users/{id}', 'UsersController@show')->where('id', '[0-9]+')->name('lihatuser');
+Route::get('users/{id}/edit', 'UsersController@edit')->where('id', '[0-9]+')->name('edituser');
+Route::patch('users/{id}/edit', 'UsersController@update')->where('id', '[0-9]+')->name('updateuser');
 
 
 
 
 
-
+// Route senarai users
 Route::get('exams', 'ExamsController@index')->name('exams');
+
+// Route tambah maklumat exam
+Route::get('exams/add', 'ExamsController@create')->name('paparborangtambahexam');
+Route::post('exams/add', 'ExamsController@store')->name('simpanrekodtambahexam');
+
+// Route maklumat exam berdasarkan ID
 Route::get('exams/{id}', 'ExamsController@show')->name('lihatexam');
+Route::get('exams/{id}/edit', 'ExamsController@edit')->name('editexam');
+Route::patch('exams/{id}/edit', 'ExamsController@update')->name('updateexam');
+Route::delete('exams/{id}', 'ExamsController@destroy')->name('deleteexam');

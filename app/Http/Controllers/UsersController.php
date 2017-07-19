@@ -46,7 +46,22 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+          'nama' => 'required|string|min:3',
+          'email' => 'required|email',
+          'password' => 'required|min:3',
+          'ic' => 'required|numeric'
+        ]);
+
+        // Dapatkan semua data yang dikirimkan.
+        $data = $request->only('nama', 'email', 'ic', 'jantina', 'alamat', 'role', 'status', 'telefon');
+        $data['password'] = bcrypt( $request->input('password') );
+
+        // Simpan data ke dalam database
+        DB::table('users')->insert( $data );
+
+        // Bagi response
+        return redirect()->route('users');
     }
 
     /**
@@ -74,7 +89,13 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+      // Dapatkan rekod user daripada table users
+      $user = DB::table('users')
+      ->where('id', '=', $id)
+      ->first();
+
+      // Bagi response papar template senarai users
+      return view('users/template_edit_user', compact('user') );
     }
 
     /**
@@ -86,7 +107,26 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+        'nama' => 'required|string|min:3',
+        'email' => 'required|email',
+        'ic' => 'required|numeric'
+      ]);
+
+      // Dapatkan semua data yang dikirimkan.
+      $data = $request->only('nama', 'email', 'ic', 'jantina', 'alamat', 'role', 'status', 'telefon');
+
+      // Sekiranya ruangan password tidak kosong, maka dapatkan dan encrypt password baru
+      if ( !empty ($request->input('password') ) )
+      {
+        $data['password'] = bcrypt( $request->input('password') );
+      }
+
+      // Kemaskini data ke dalam database
+      DB::table('users')->where('id', '=', $id)->update( $data );
+
+      // Bagi response
+      return redirect()->route('users');
     }
 
     /**
