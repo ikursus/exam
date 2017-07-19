@@ -137,6 +137,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+      // Dapatkan rekod user daripada table users
+      $user = DB::table('users')
+      ->where('id', '=', $id)
+      ->delete();
+
+      // Bagi response
+      return redirect()->route('users');
     }
 }

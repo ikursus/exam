@@ -27,6 +27,7 @@ Route::post('users/add', 'UsersController@store')->name('simpanrekodtambahuser')
 Route::get('users/{id}', 'UsersController@show')->where('id', '[0-9]+')->name('lihatuser');
 Route::get('users/{id}/edit', 'UsersController@edit')->where('id', '[0-9]+')->name('edituser');
 Route::patch('users/{id}/edit', 'UsersController@update')->where('id', '[0-9]+')->name('updateuser');
+Route::delete('users/{id}', 'UsersController@destroy')->where('id', '[0-9]+')->name('deleteuser');
 
 
 
