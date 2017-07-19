@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 
-class UsersController extends Controller
+class ExamsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,17 +15,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // Dapatkan senarai users daripada table users
-        // $senarai_users = DB::table('users')->paginate(10);
-        $senarai_users = DB::table('users')
-        ->select('id', 'nama', 'email')
-        ->orderBy('id', 'desc')
-        ->paginate(10);
+        $senarai_exams = DB::table('exams')->paginate(10);
 
-        //dd($senarai_users);
-
-        // Bagi response papar template senarai users
-        return view('users/template_index', compact('senarai_users') );
+        return view('exams/template_index', compact('senarai_exams') );
     }
 
     /**
@@ -35,7 +27,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users/template_add_user');
+        //
     }
 
     /**
@@ -57,13 +49,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-      // Dapatkan rekod user daripada table users
-      $user = DB::table('users')
-      ->where('id', '=', $id)
-      ->first();
+      $exam = DB::table('exams')->where('id', $id)->first();
 
-      // Bagi response papar template senarai users
-      return view('users/template_show', compact('user') );
+      return view('exams/template_show', compact('exam') );
     }
 
     /**

@@ -8,31 +8,32 @@
                 <div class="panel-heading">Senarai Users</div>
 
                 <div class="panel-body">
-
-                    <p>
-                      <a href="{{ route('paparborangtambahuser') }}" class="btn btn-primary">Tambah User</a>
-                    </p>
-
-                    <p>Berikut adalah senarai users sistem ini.</p>
+                    Berikut adalah senarai users sistem ini.
 
                     <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th>ID</th>
                           <th>NAMA</th>
-                          <th>EMAIL</th>
+                          <th>TARIKH MULA</th>
+                          <th>TARIKH TAMAT</th>
+                          <th>KUOTA</th>
+                          <th>STATUS</th>
                           <th>ACTION</th>
                         </tr>
                       </thead>
                     <tbody>
-                    @foreach( $senarai_users as $user )
+                    @foreach( $senarai_exams as $exam )
 
                       <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->nama }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $exam->id }}</td>
+                        <td>{{ $exam->nama }}</td>
+                        <td>{{ $exam->tarikh_mula }}</td>
+                        <td>{{ $exam->tarikh_mula }}</td>
+                        <td>{{ $exam->kuota }}</td>
+                        <td>{{ $exam->status }}</td>
                         <td>
-                          <a href="{{ route('lihatuser', $user->id) }}" class="btn btn-xs btn-primary">SHOW</a>
+                          <a href="{{ route('lihatexam', $exam->id) }}" class="btn btn-xs btn-primary">SHOW</a>
                         </td>
                       </tr>
 
@@ -40,7 +41,7 @@
                     </tbody>
                     </table>
 
-                    {!! $senarai_users->links() !!}
+                    {!! $senarai_exams->links() !!}
                 </div>
             </div>
         </div>

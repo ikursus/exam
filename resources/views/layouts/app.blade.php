@@ -47,6 +47,7 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                           <li><a href="{{ route('users') }}">Users</a></li>
+                          <li><a href="{{ route('exams') }}">Exams</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->nama }} <span class="caret"></span>

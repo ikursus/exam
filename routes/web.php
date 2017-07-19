@@ -16,6 +16,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Routes senarai users
 Route::get('users', 'UsersController@index')->name('users');
 
-Route::get('users/{id}', 'UsersController@show')->name('lihatuser');
+// Route tambah maklumat user
+Route::get('users/add', 'UsersController@create')->name('paparborangtambahuser');
+Route::post('users/add', 'UsersController@store')->name('simpanrekodtambahuser');
+
+// Route maklumat user berdasarkan ID
+Route::get('users/{id}', 'UsersController@show')->where('id', '[0-9]+')->name('lihatuser');
+
+
+
+
+
+
+Route::get('exams', 'ExamsController@index')->name('exams');
+Route::get('exams/{id}', 'ExamsController@show')->name('lihatexam');
