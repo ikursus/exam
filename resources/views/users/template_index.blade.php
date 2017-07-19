@@ -13,6 +13,8 @@
                       <a href="{{ route('paparborangtambahuser') }}" class="btn btn-primary">Tambah User</a>
                     </p>
 
+                    @include('layouts/alerts')
+
                     <p>Berikut adalah senarai users sistem ini.</p>
 
                     <table class="table table-bordered">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -17,8 +18,12 @@ class UsersController extends Controller
     {
         // Dapatkan senarai users daripada table users
         // $senarai_users = DB::table('users')->paginate(10);
-        $senarai_users = DB::table('users')
-        ->select('id', 'nama', 'email')
+        // $senarai_users = DB::table('users')
+        // ->select('id', 'nama', 'email')
+        // ->orderBy('id', 'desc')
+        // ->paginate(10);
+
+        $senarai_users = User::select('id', 'nama', 'email')
         ->orderBy('id', 'desc')
         ->paginate(10);
 
@@ -61,7 +66,7 @@ class UsersController extends Controller
         DB::table('users')->insert( $data );
 
         // Bagi response
-        return redirect()->route('users');
+        return redirect()->route('users')->with('alert-success', 'Anda berjaya menambah user baru!');
     }
 
     /**
@@ -73,9 +78,11 @@ class UsersController extends Controller
     public function show($id)
     {
       // Dapatkan rekod user daripada table users
-      $user = DB::table('users')
-      ->where('id', '=', $id)
-      ->first();
+      // $user = DB::table('users')
+      // ->where('id', '=', $id)
+      // ->first();
+
+      $user = User::find($id);
 
       // Bagi response papar template senarai users
       return view('users/template_show', compact('user') );
@@ -90,9 +97,11 @@ class UsersController extends Controller
     public function edit($id)
     {
       // Dapatkan rekod user daripada table users
-      $user = DB::table('users')
-      ->where('id', '=', $id)
-      ->first();
+      // $user = DB::table('users')
+      // ->where('id', '=', $id)
+      // ->first();
+
+      $user = User::find($id);
 
       // Bagi response papar template senarai users
       return view('users/template_edit_user', compact('user') );
@@ -138,9 +147,20 @@ class UsersController extends Controller
     public function destroy($id)
     {
       // Dapatkan rekod user daripada table users
-      $user = DB::table('users')
-      ->where('id', '=', $id)
-      ->delete();
+      // $user = DB::table('users')
+      // ->where('id', '=', $id)
+      // ->delete();
+
+      // $user = User::find($id)->delete();
+      // DApatkan maklumat user
+      $user = User::find($id);
+      // Semak status user
+      if ( $user->role == 'admin' )
+      {
+        return redirect()->route('users')->with('alert-danger', 'Anda tidak boleh delete admin!');
+      }
+      // Kalau tak ada masalah, teruskan proses delete
+      $user->delete();
 
       // Bagi response
       return redirect()->route('users');
