@@ -59,11 +59,12 @@ class UsersController extends Controller
         ]);
 
         // Dapatkan semua data yang dikirimkan.
-        $data = $request->only('nama', 'email', 'ic', 'jantina', 'alamat', 'role', 'status', 'telefon');
+        $data = $request->except('password');
         $data['password'] = bcrypt( $request->input('password') );
 
         // Simpan data ke dalam database
-        DB::table('users')->insert( $data );
+        // DB::table('users')->insert( $data );
+        User::create( $data );
 
         // Bagi response
         return redirect()->route('users')->with('alert-success', 'Anda berjaya menambah user baru!');
@@ -123,7 +124,7 @@ class UsersController extends Controller
       ]);
 
       // Dapatkan semua data yang dikirimkan.
-      $data = $request->only('nama', 'email', 'ic', 'jantina', 'alamat', 'role', 'status', 'telefon');
+      $data = $request->except('password');
 
       // Sekiranya ruangan password tidak kosong, maka dapatkan dan encrypt password baru
       if ( !empty ($request->input('password') ) )
@@ -132,8 +133,8 @@ class UsersController extends Controller
       }
 
       // Kemaskini data ke dalam database
-      DB::table('users')->where('id', '=', $id)->update( $data );
-
+      // DB::table('users')->where('id', '=', $id)->update( $data );
+      User::find($id)->update($data);
       // Bagi response
       return redirect()->route('users');
     }
