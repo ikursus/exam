@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use App\User;
+use Datatables;
 
 class UsersController extends Controller
 {
@@ -23,14 +24,73 @@ class UsersController extends Controller
         // ->orderBy('id', 'desc')
         // ->paginate(10);
 
-        $senarai_users = User::select('id', 'nama', 'email')
-        ->orderBy('id', 'desc')
-        ->paginate(10);
+        // $senarai_users = User::select('id', 'nama', 'email')
+        // ->orderBy('id', 'desc')
+        // ->paginate(10);
 
         //dd($senarai_users);
 
         // Bagi response papar template senarai users
-        return view('users/template_index', compact('senarai_users') );
+        // return view('users/template_index', compact('senarai_users') );
+        return view('users/template_index');
+    }
+
+    public function datatables()
+    {
+      // Query ke table users
+      $senarai_users = User::select(
+        'id',
+        'nama',
+        'email',
+        'telefon',
+        'status',
+        'role'
+      );
+
+      // Return response
+      return Datatables::of($senarai_users)
+      ->addColumn('action', function ($user) {
+        return '
+
+<a href="' . route('lihatuser', $user->id) . '" class="btn btn-xs btn-primary">SHOW</a>
+<a href="' . route('edituser', $user->id) . '" class="btn btn-xs btn-info">EDIT</a>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-delete-' . $user->id . '">
+DELETE
+</button>
+
+<!-- Modal -->
+<form method="POST" action="'. route('deleteuser', $user->id) .'">
+<div class="modal fade" id="modal-delete-' . $user->id . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">PENGESAHAN HAPUS DATA</h4>
+</div>
+<div class="modal-body">
+
+  Adakah anda ingin menghapuskan data : ' . $user->nama . '?
+
+ ' . csrf_field() . '
+  <input type="hidden" name="_method" value="delete">
+
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="submit" class="btn btn-danger">SAHKAN</button>
+</div>
+</div>
+</div>
+</div>
+</form>
+
+        ';
+
+      })
+      ->make(true);
     }
 
     /**

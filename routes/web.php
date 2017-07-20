@@ -15,6 +15,8 @@ Route::group( ['middleware' => 'auth'], function() {
 
   // Route senarai users
   Route::get('users', 'UsersController@index')->name('users');
+  // Route untuk datatables users
+  Route::get('users/datatables', 'UsersController@datatables')->name('datatablesUsers');
 
   // Route tambah maklumat user
   Route::get('users/add', 'UsersController@create')->name('paparborangtambahuser');
