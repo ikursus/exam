@@ -19,20 +19,15 @@ class PermohonanController extends Controller
     {
         $user = Auth::user();
 
-        if ( $user->role != 'admin' )
-        {
-          // $senarai_permohonan = Permohonan::where('user_id', '=', $user->id)->paginate(10);
-        }
-        else
-        {
-          // $senarai_permohonan = Permohonan::paginate(10);
+
+          $senarai_permohonan = Permohonan::paginate(10);
           // Kaedah join table menggunakan QUERY BUILDER
-          $senarai_permohonan = DB::table('permohonan')
-          ->join('users', 'permohonan.user_id', '=', 'users.id')
-          ->join('exams', 'permohonan.exam_id', '=', 'exams.id')
-          ->select('permohonan.*', 'users.nama', 'exams.nama as nama_exam')
-          ->paginate(10);
-        }
+          // $senarai_permohonan = DB::table('permohonan')
+          // ->join('users', 'permohonan.user_id', '=', 'users.id')
+          // ->join('exams', 'permohonan.exam_id', '=', 'exams.id')
+          // ->select('permohonan.*', 'users.nama', 'exams.nama as nama_exam')
+          // ->paginate(10);
+        
 
         return view('permohonan/template_index', compact('senarai_permohonan') );
     }

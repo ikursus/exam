@@ -42,4 +42,9 @@ class User extends Authenticatable
       return $this->attributes['alamat'] = trim($value) !== '' ? $value : '';
     }
 
+    public function senaraiPermohonan()
+    {
+      return $this->hasMany(Permohonan::class, 'user_id');
+    }
+
 }

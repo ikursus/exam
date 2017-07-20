@@ -34,8 +34,14 @@
 
                       <tr>
                         <td>{{ $item->id }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->nama_exam }}</td>
+                        <td>
+                          @if( count($item->rekoduser ) )
+                          {{ $item->rekoduser->nama }}
+                          @endif
+                        </td>
+                        <td>
+                          {{ $item->rekodexam->nama }}
+                        </td>
                         <td>{{ ucwords( $item->status ) }}</td>
                         <td>
 
