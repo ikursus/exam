@@ -46,7 +46,7 @@ $(function() {
             { data: 'id', name: 'id' },
             { data: 'nama', name: 'nama' },
             { data: 'email', name: 'email' },
-            { data: 'action', name: 'action' }
+            { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
     });
 });
