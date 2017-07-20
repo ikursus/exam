@@ -11,29 +11,11 @@
 
                   @include('layouts/alerts')
 
-                  <form class="form-horizontal" method="POST" action="{{ route('storepermohonan') }}">
-                      {{ csrf_field() }}
+                  {!! Form::open(['method' => 'POST', 'route' => 'simpanrekodtambahexam', 'class' => 'form-horizontal']) !!}
 
-                      <div class="form-group">
-                          <label for="exam_id" class="col-md-4 control-label">Pilihan Exam</label>
+                      @include('permohonan/template_borang_permohonan')
 
-                          <div class="col-md-6">
-                              <select name="exam_id" class="form-control">
-                                @foreach( $exams as $item )
-                                <option value="{{ $item->id }}">{{ $item->nama }} ({{ $item->tarikh_mula }})</option>
-                                @endforeach
-                              </select>
-                          </div>
-                      </div>
-
-                      <div class="form-group">
-                          <div class="col-md-8 col-md-offset-4">
-                              <button type="submit" class="btn btn-primary">
-                                  Hantar Permohonan
-                              </button>
-                          </div>
-                      </div>
-                  </form>
+                  {!! Form::close() !!}
 
                 </div>
             </div>

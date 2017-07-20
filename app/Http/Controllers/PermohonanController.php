@@ -27,7 +27,7 @@ class PermohonanController extends Controller
           // ->join('exams', 'permohonan.exam_id', '=', 'exams.id')
           // ->select('permohonan.*', 'users.nama', 'exams.nama as nama_exam')
           // ->paginate(10);
-        
+
 
         return view('permohonan/template_index', compact('senarai_permohonan') );
     }
@@ -111,7 +111,9 @@ class PermohonanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permohonan = Permohonan::find($id);
+
+        return view('permohonan/template_edit_permohonan', compact('permohonan'));
     }
 
     /**

@@ -45,5 +45,6 @@ Route::group( ['middleware' => 'auth'], function() {
   // Route untuk terima data daripada borang permohonan exam
   Route::post('permohonan/add', 'PermohonanController@store')->name('storepermohonan');
   Route::delete('permohonan/{id}', 'PermohonanController@destroy')->name('deletepermohonan');
+  Route::get('permohonan/{id}', 'PermohonanController@edit')->name('editpermohonan');
 
 });
