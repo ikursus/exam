@@ -34,8 +34,8 @@
 
                       <tr>
                         <td>{{ $item->id }}</td>
-                        <td>{{ $item->user_id }}</td>
-                        <td>{{ $item->exam_id }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->nama_exam }}</td>
                         <td>{{ ucwords( $item->status ) }}</td>
                         <td>
 
