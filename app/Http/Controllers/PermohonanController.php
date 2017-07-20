@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Permohonan;
+use App\Exam;
 
 class PermohonanController extends Controller
 {
@@ -13,7 +16,18 @@ class PermohonanController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        if ( $user->role != 'admin' )
+        {
+          $senarai_permohonan = Permohonan::where('user_id', '=', $user->id)->paginate(10);
+        }
+        else
+        {
+          $senarai_permohonan = Permohonan::paginate(10);
+        }
+
+        return view('permohonan/template_index', compact('senarai_permohonan') );
     }
 
     /**
@@ -21,11 +35,12 @@ class PermohonanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paparborangpermohonan()
+    public function create()
     {
-      $page_title = 'Borang Permohonan Menduduki Peperiksaan';
+      // Dapatkan senarai exams
+      $exams = Exam::where('status', '=', 'buka')->get();
 
-      return view('permohonan/template_permohonan', compact('page_title'));
+      return view('permohonan/template_add_permohonan', compact('exams'));
     }
 
     /**
@@ -38,13 +53,24 @@ class PermohonanController extends Controller
     {
       // Validate data
       $this->validate($request, [
-        'nama_pemohon' => 'required|string|min:3',
-        'email_pemohon' => 'required|email'
-      ] );
+        'exam_id' => 'required|integer'
+      ]);
 
+      // Simpan rekod ke dalam database
+      $data = new Permohonan;
+      $data->user_id = Auth::user()->id;
+      $data->exam_id = $request->input('exam_id');
+      $data->status = 'pending';
+      $data->save();
 
-        return $request->all();
-        // return $request->input('nama_pemohon');
+      // Cara kedua
+      // $data = $request->all();
+      // $data['user_id'] = Auth::user()->id;
+      // $data['user_id'] = 'pending';
+      //
+      // Permohonan::create($data)
+
+      return redirect()->route('permohonan')->with('alert-success', 'Permohonan berjaya ditambah!');
     }
 
     public function statuspermohonan()
@@ -106,6 +132,8 @@ class PermohonanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Permohonan::find($id)->delete();
+
+        return redirect()->back()->with('alert-success', 'Permohonan berjaya dihapuskan!');
     }
 }

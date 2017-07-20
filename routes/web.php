@@ -4,11 +4,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route paparkan borang permohonan exam
-Route::get('permohonan', 'PermohonanController@paparborangpermohonan')->name('permohonan');
-// Route untuk terima data daripada borang permohonan exam
-Route::post('permohonan', 'PermohonanController@store')->name('storepermohonan');
-
 Route::get('status', 'PermohonanController@statuspermohonan')->name('statuspermohonan');
 Route::post('status', 'PermohonanController@checkpermohonan')->name('checkpermohonan');
 
@@ -29,10 +24,6 @@ Route::get('users/{id}/edit', 'UsersController@edit')->where('id', '[0-9]+')->na
 Route::patch('users/{id}/edit', 'UsersController@update')->where('id', '[0-9]+')->name('updateuser');
 Route::delete('users/{id}', 'UsersController@destroy')->where('id', '[0-9]+')->name('deleteuser');
 
-
-
-
-
 // Route senarai users
 Route::get('exams', 'ExamsController@index')->name('exams');
 
@@ -45,3 +36,10 @@ Route::get('exams/{id}', 'ExamsController@show')->name('lihatexam');
 Route::get('exams/{id}/edit', 'ExamsController@edit')->name('editexam');
 Route::patch('exams/{id}/edit', 'ExamsController@update')->name('updateexam');
 Route::delete('exams/{id}', 'ExamsController@destroy')->name('deleteexam');
+
+// Route paparkan borang permohonan exam
+Route::get('permohonan', 'PermohonanController@index')->name('permohonan');
+Route::get('permohonan/add', 'PermohonanController@create')->name('paparborangpermohonan');
+// Route untuk terima data daripada borang permohonan exam
+Route::post('permohonan/add', 'PermohonanController@store')->name('storepermohonan');
+Route::delete('permohonan/{id}', 'PermohonanController@destroy')->name('deletepermohonan');

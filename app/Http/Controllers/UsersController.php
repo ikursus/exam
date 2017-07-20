@@ -164,6 +164,6 @@ class UsersController extends Controller
       $user->delete();
 
       // Bagi response
-      return redirect()->route('users');
+      return redirect()->route('users')->with('alert-success', 'Anda berjaya menghapuskan user!');
     }
 }

@@ -5,47 +5,48 @@
     <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Senarai Exams</div>
+                <div class="panel-heading">Senarai Permohonan Exam</div>
 
                 <div class="panel-body">
-                  <p>
-                    <a href="{{ route('paparborangtambahexam') }}" class="btn btn-primary">Tambah Exam</a>
-                  </p>
+
+                    <p>
+                      <a href="{{ route('paparborangpermohonan') }}" class="btn btn-primary">Pohon Exam Baru</a>
+                    </p>
+
+                    @include('layouts/alerts')
+
+                    @if ( count( $senarai_permohonan ) )
+
+                    <p>Berikut adalah senarai permohonan exam yang telah dibuat.</p>
 
                     <table class="table table-bordered">
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>NAMA</th>
-                          <th>TARIKH MULA</th>
-                          <th>TARIKH TAMAT</th>
-                          <th>KUOTA</th>
+                          <th>NAMA PEMOHON</th>
+                          <th>NAMA EXAM</th>
                           <th>STATUS</th>
                           <th>ACTION</th>
                         </tr>
                       </thead>
                     <tbody>
-                    @foreach( $senarai_exams as $exam )
+                    @foreach( $senarai_permohonan as $item )
 
                       <tr>
-                        <td>{{ $exam->id }}</td>
-                        <td>{{ $exam->nama }}</td>
-                        <td>{{ $exam->tarikh_mula }}</td>
-                        <td>{{ $exam->tarikh_mula }}</td>
-                        <td>{{ $exam->kuota }}</td>
-                        <td>{{ $exam->status }}</td>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->user_id }}</td>
+                        <td>{{ $item->exam_id }}</td>
+                        <td>{{ ucwords( $item->status ) }}</td>
                         <td>
-                          <a href="{{ route('lihatexam', $exam->id) }}" class="btn btn-xs btn-primary">SHOW</a>
-                          <a href="{{ route('editexam', $exam->id) }}" class="btn btn-xs btn-info">EDIT</a>
 
                           <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $exam->id }}">
+                          <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modal-delete-{{ $item->id }}">
                             DELETE
                           </button>
 
                           <!-- Modal -->
-                          <form method="POST" action="{{ route('deleteexam', $exam->id) }}">
-                          <div class="modal fade" id="modal-delete-{{ $exam->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <form method="POST" action="{{ route('deletepermohonan', $item->id) }}">
+                          <div class="modal fade" id="modal-delete-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -54,7 +55,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                  Adakah anda ingin menghapuskan data : {{ $exam->nama }}?
+                                  Adakah anda ingin menghapuskan data : {{ $item->nama }}?
 
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="delete">
@@ -70,6 +71,8 @@
                           </div>
                           </form>
 
+
+
                         </td>
                       </tr>
 
@@ -77,7 +80,11 @@
                     </tbody>
                     </table>
 
-                    {!! $senarai_exams->links() !!}
+                    @else
+                    <div class="alert alert-info">Tiada rekod senarai permohonan exam buat masa ini</div>
+                    @endif
+
+                    {!! $senarai_permohonan->links() !!}
                 </div>
             </div>
         </div>
